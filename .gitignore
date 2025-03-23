@@ -1,0 +1,64 @@
+# Flutter
+**/build/
+**/.dart_tool/
+**/.idea/
+**/.vscode/
+**/.packages
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/pubspec.lock
+**/.DS_Store
+
+# iOS
+**/ios/Flutter/Flutter.framework/
+**/ios/Flutter/App.framework/
+**/ios/.symlinks/
+**/ios/Pods/
+**/ios/Runner.xcworkspace/
+**/ios/Runner.xcodeproj/project.xcworkspace/
+
+# Android
+**/android/.gradle/
+**/android/captures/
+**/android/.idea/
+**/android/local.properties
+**/android/build/
+**/android/app/build/
+
+# Node.js backend
+**/node_modules/
+**/package-lock.json
+**/npm-debug.log
+
+# Systemowe / IDE
+*.log
+*.lock
+*.tmp
+*.swp
+*.swo
+*.bak
+*.orig
+*.rej
+*.sublime-workspace
+*.sublime-project
+*.code-workspace
+*.iml
+.idea/
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Env
+*.env
+.env.*

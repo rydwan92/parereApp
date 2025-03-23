@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'screens/home/home_screen.dart';
 import 'services/reminder_provider.dart';
 import 'utils/theme.dart';

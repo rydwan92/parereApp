@@ -1,59 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../services/reminder_provider.dart';
-import '../../utils/constants.dart';
+
+import '../../providers/reminder_provider.dart';
+import '../../routes/app_routes.dart';
 
 class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final reminderProvider = Provider.of<ReminderProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
-        title: Text('Strona główna'),
+        title: const Text("Strona główna"),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add_comment),
+            tooltip: "Dodaj pytanie",
+            onPressed: () {
+              Navigator.pushNamed(context, AppRoutes.addQuestion);
+            },
+          ),
+        ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(AppSpacing.md),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Witaj w aplikacji!',
-              style: Theme.of(context).textTheme.headlineMedium,
+              "Pytanie dnia:",
+              style: Theme.of(context).textTheme.titleLarge,
             ),
-            SizedBox(height: AppSpacing.lg),
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(AppSpacing.sm),
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(AppSpacing.md),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Przypomnienie dnia:',
-                        style: Theme.of(context).textTheme.titleMedium),
-                    SizedBox(height: AppSpacing.sm),
-                    Consumer<ReminderProvider>(
-                      builder: (context, reminder, child) {
-                        return Text(
-                          reminder.dailyQuestion,
-                          style: Theme.of(context).textTheme.bodyLarge,
-                        );
-                      },
-                    ),
-                    SizedBox(height: AppSpacing.md),
-                    ElevatedButton(
-                      onPressed: () {
-                        // Przykład zmiany pytania
-                        context.read<ReminderProvider>().setNewQuestion(
-                          "„Czym Cię dzisiaj zaskoczyłem, Mamo?”",
-                        );
-                      },
-                      child: Text('Nowe pytanie'),
-                    ),
-                  ],
-                ),
-              ),
+            const SizedBox(height: 16),
+            Text(
+              reminderProvider.dailyQuestion.isNotEmpty
+                  ? reminderProvider.dailyQuestion
+                  : "Ładuję pytanie...",
+              style: Theme.of(context).textTheme.bodyLarge,
+            ),
+            const SizedBox(height: 32),
+            ElevatedButton.icon(
+              onPressed: () {
+                reminderProvider.resetQuestion();
+                reminderProvider.loadDailyQuestion();
+              },
+              icon: const Icon(Icons.refresh),
+              label: const Text("Wylosuj inne pytanie"),
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton.icon(
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoutes.addQuestion);
+              },
+              icon: const Icon(Icons.add),
+              label: const Text("Dodaj własne pytanie"),
             ),
           ],
         ),

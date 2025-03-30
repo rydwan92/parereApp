@@ -1,37 +1,30 @@
-const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const connectDB = require('./config/db');
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import authRoutes from "./routes/authRoutes.js";
+import connectDB from "./config/db.js";
 
 dotenv.config();
+
+// Inicjalizacja połączenia z MongoDB
 connectDB();
 
 const app = express();
 
-app.use(cors());
+// Middleware do parsowania JSON
 app.use(express.json());
 
-// Przykładowy route
+// Middleware obsługujący CORS (umożliwia integrację frontend-backend)
+app.use(cors({
+    origin: '*' // Na produkcji zmień na adres frontendu
+}));
+
+// Endpointy aplikacji (zgodne z przyjętą strukturą)
+app.use('/api/auth', authRoutes);
+
+// Podstawowy endpoint (health check aplikacji)
 app.get('/', (req, res) => {
-    res.send('Backend aplikacji dla rodziców');
+    res.send('API Aplikacja dla Rodziców działa poprawnie 🚀');
 });
 
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-    console.log(`Serwer działa na porcie ${PORT}`);
-});
-
-const mongoose = require('mongoose');
-
-const connectDB = async () => {
-    try {
-        await mongoose.connect(process.env.MONGO_URI);
-        console.log('Połączono z bazą MongoDB');
-    } catch (error) {
-        console.error(error.message);
-        process.exit(1);
-    }
-};
-
-module.exports = connectDB;
+export default app;

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-
+import '../screens/calendar/calendar_screen.dart';
 import '../screens/home/home_screen.dart';
 import '../screens/questions/add_question_screen.dart';
-import '../screens/profile/child_profile_screen.dart';
+import '../screens/child_profile/child_profile_screen.dart';
 import '../screens/statistics/statistics_screen.dart';
-import '../screens/health_calendar/health_calendar_screen.dart';
 import '../screens/memories/memories_screen.dart';
 import '../screens/product_ratings/product_ratings_screen.dart';
 import '../screens/sports/sports_screen.dart';
@@ -21,15 +20,17 @@ class AppScreens {
       case AppRoutes.childProfile:
         return MaterialPageRoute(builder: (_) => ChildProfileScreen());
       case AppRoutes.statistics:
+        return MaterialPageRoute(builder: (_) => CalendarScreen());
+      case AppRoutes.memories:
         return MaterialPageRoute(builder: (_) => StatisticsScreen());
       case AppRoutes.memories:
         return MaterialPageRoute(builder: (_) => MemoriesScreen());
-      case AppRoutes.healthCalendar:
-        return MaterialPageRoute(builder: (_) => HealthCalendarScreen());
       case AppRoutes.productRatings:
         return MaterialPageRoute(builder: (_) => ProductRatingsScreen());
       case AppRoutes.sports:
         return MaterialPageRoute(builder: (_) => SportsScreen());
+      case AppRoutes.memories:
+        return MaterialPageRoute(builder: (_) => const MemoriesScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

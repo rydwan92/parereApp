@@ -11,23 +11,30 @@ class ReminderProvider with ChangeNotifier {
 
   Future<void> loadDailyQuestion() async {
     final prefs = await SharedPreferences.getInstance();
-    _dailyQuestion = prefs.getString(_prefsKey) ?? '';
+    final savedDate = prefs.getString('daily_question_date');
+    final today = DateTime.now().toIso8601String().substring(0, 10);
 
-    if (_dailyQuestion.isEmpty) {
-      final question = await _service.fetchRandomQuestion();
-      if (question != null) {
-        _dailyQuestion = question;
-        await prefs.setString(_prefsKey, _dailyQuestion);
-        notifyListeners();
-      }
+    if (prefs.containsKey(_prefsKey) && savedDate == today) {
+      _dailyQuestion = prefs.getString(_prefsKey)!;
+      notifyListeners();
+      return;
+    }
+
+    final question = await _service.fetchRandomQuestion();
+    if (question != null) {
+      _dailyQuestion = question;
+      await prefs.setString(_prefsKey, _dailyQuestion);
+      await prefs.setString('daily_question_date', today);
+      notifyListeners();
     }
   }
 
-  Future<void> submitCustomQuestion(String question) async {
-    final success = await _service.submitQuestion(question);
+  Future<bool> submitCustomQuestion(String text) async {
+    final success = await _service.submitQuestion(text);
     if (success) {
       print("Pytanie dodane!");
     }
+    return success;
   }
 
   void resetQuestion() async {

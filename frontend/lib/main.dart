@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'providers/reminder_provider.dart';
-import 'routes/app_routes.dart';
-import 'routes/app_screens.dart';
-import 'theme/app_theme.dart';
-import 'services/auth_service.dart';
 import 'screens/auth/welcome_screen.dart';
+import 'screens/main/home_screen.dart';
+import 'services/auth_service.dart';
+import 'theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final bool isLoggedIn = await AuthService.isLoggedIn();
-
-  runApp(MyApp(isLoggedIn: isLoggedIn));
+  bool loggedIn = await AuthService.isLoggedIn();
+  runApp(MyApp(isLoggedIn: loggedIn));
 }
 
 class MyApp extends StatelessWidget {
@@ -32,8 +29,11 @@ class MyApp extends StatelessWidget {
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         themeMode: ThemeMode.system,
-        initialRoute: isLoggedIn ? AppRoutes.home : AppRoutes.welcome,
-        onGenerateRoute: AppScreens.onGenerateRoute,
+        home: isLoggedIn ? HomeScreen() : WelcomeScreen(),
+        routes: {
+          '/welcome': (context) => WelcomeScreen(),
+          '/home': (context) => HomeScreen(),
+        },
       ),
     );
   }

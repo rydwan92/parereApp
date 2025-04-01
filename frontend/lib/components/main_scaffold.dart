@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import '../routes/app_routes.dart';
 
-class MainScaffold extends StatefulWidget {
+class MainScaffold extends StatelessWidget {
   final Widget child;
   final int currentIndex;
 
-  const MainScaffold({Key? key, required this.child, required this.currentIndex})
-      : super(key: key);
+  const MainScaffold({
+    super.key,
+    required this.child,
+    required this.currentIndex,
+  });
 
-  @override
-  State<MainScaffold> createState() => _MainScaffoldState();
-}
-
-class _MainScaffoldState extends State<MainScaffold> {
-  void _onItemTapped(int index) {
+  void _onItemTapped(BuildContext context, int index) {
     switch (index) {
       case 0:
         Navigator.pushReplacementNamed(context, AppRoutes.childProfile);
@@ -36,13 +34,11 @@ class _MainScaffoldState extends State<MainScaffold> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: widget.child,
+      body: child,
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: widget.currentIndex,
+        currentIndex: currentIndex,
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.teal,
-        unselectedItemColor: Colors.grey,
-        onTap: _onItemTapped,
+        onTap: (index) => _onItemTapped(context, index),
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profil dziecka'),
           BottomNavigationBarItem(icon: Icon(Icons.bar_chart), label: 'Statystyki'),

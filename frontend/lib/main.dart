@@ -1,34 +1,40 @@
 import 'package:flutter/material.dart';
-import 'screens/auth/welcome_screen.dart';
-import 'screens/auth/login_screen.dart';
-import 'screens/auth/registration_screen.dart';
-import 'screens/home/home_screen.dart';
-import 'services/auth_service.dart';
+import 'package:provider/provider.dart';
+
 import 'providers/reminder_provider.dart';
+import 'routes/app_routes.dart';
+import 'routes/app_screens.dart';
+import 'theme/app_theme.dart';
+import 'services/auth_service.dart';
+import 'screens/auth/welcome_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  bool loggedIn = await AuthService.isLoggedIn();
-  runApp(MyApp(isLoggedIn: loggedIn));
+  final bool isLoggedIn = await AuthService.isLoggedIn();
+
+  runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
 class MyApp extends StatelessWidget {
   final bool isLoggedIn;
 
-  MyApp({required this.isLoggedIn});
+  const MyApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Aplikacja dla Rodziców',
-      theme: ThemeData(primarySwatch: Colors.teal),
-      home: isLoggedIn ? HomeScreen() : WelcomeScreen(),
-      routes: {
-        '/home': (context) => HomeScreen(),
-        '/login': (context) => LoginScreen(),
-        '/register': (context) => RegisterScreen(),
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ReminderProvider()),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Aplikacja dla rodziców',
+        theme: AppTheme.lightTheme,
+        darkTheme: AppTheme.darkTheme,
+        themeMode: ThemeMode.system,
+        initialRoute: isLoggedIn ? AppRoutes.home : AppRoutes.welcome,
+        onGenerateRoute: AppScreens.onGenerateRoute,
+      ),
     );
   }
 }

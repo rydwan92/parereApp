@@ -1,9 +1,12 @@
 class AppRoutes {
-  static const String home = '/';
-  static const String addQuestion = '/add-question';
+  static const String welcome = '/welcome';
+  static const String login = '/login';
+  static const String register = '/register';
+  static const String home = '/home';
   static const String childProfile = '/child-profile';
-  static const String memories = '/memories';
   static const String statistics = '/statistics';
-  static const String productRatings = '/product-ratings';
-  static const String sports = '/sports';
+  static const String editing = '/editing';
+  static const String settings = '/settings';
+  static const String questions = '/questions';
+  static const String tips = '/tips';
 }

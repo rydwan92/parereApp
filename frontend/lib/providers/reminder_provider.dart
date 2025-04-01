@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../services/questions_service.dart';
+import '../services/api_service.dart';
+
 
 class ReminderProvider with ChangeNotifier {
+  final ApiService _service = ApiService();
+  final String _prefsKey = 'daily_question';
   String _dailyQuestion = '';
-  String get dailyQuestion => _dailyQuestion;
 
-  final _prefsKey = 'daily_question';
-  final QuestionsService _service = QuestionsService();
+  String get dailyQuestion => _dailyQuestion;
 
   Future<void> loadDailyQuestion() async {
     final prefs = await SharedPreferences.getInstance();

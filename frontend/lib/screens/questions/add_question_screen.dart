@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/questions/add_question_screen.dart';
+import 'package:frontend/screens/questions/add_question_screen.dart';
 import '../../components/main_scaffold.dart';
 
 class AddQuestionScreen extends StatelessWidget {

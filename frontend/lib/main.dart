@@ -8,7 +8,7 @@ import 'theme/app_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  bool loggedIn = await AuthService.isLoggedIn();
+  bool loggedIn = await AuthService.isLogged();
   runApp(MyApp(isLoggedIn: loggedIn));
 }
 
@@ -29,10 +29,10 @@ class MyApp extends StatelessWidget {
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         themeMode: ThemeMode.system,
-        home: isLoggedIn ? HomeScreen() : WelcomeScreen(),
+        initialRoute: isLoggedIn ? '/home' : '/welcome',
         routes: {
-          '/welcome': (context) => WelcomeScreen(),
-          '/home': (context) => HomeScreen(),
+          '/welcome': (context) => const WelcomeScreen(),
+          '/home': (context) => const HomeScreen(),
         },
       ),
     );
